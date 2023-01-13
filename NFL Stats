@@ -1,3 +1,5 @@
+Data from pamelafox on github (https://gist.github.com/pamelafox/3d8ab901def3577a8bfc881f6255d3f6). 
+
 CREATE TABLE superbowls(
   Date      TEXT PRIMARY KEY,
   SB         TEXT,
@@ -65,18 +67,24 @@ INSERT INTO superbowls(Date,SB,Winner,Winner_Pts,Loser,Loser_Pts,MVP,Stadium,Cit
 INSERT INTO superbowls(Date,SB,Winner,Winner_Pts,Loser,Loser_Pts,MVP,Stadium,City,State) VALUES ('Jan 14 1968','II (2)','Green Bay Packers',33,'Oakland Raiders',14,'Bart Starr+','Orange Bowl','Miami','Florida');
 INSERT INTO superbowls(Date,SB,Winner,Winner_Pts,Loser,Loser_Pts,MVP,Stadium,City,State) VALUES ('Jan 15 1967','I (1)','Green Bay Packers',35,'Kansas City Chiefs',10,'Bart Starr+','Memorial Coliseum','Los Angeles','California');
 
+--What is the average winning score? The average losing score?
 SELECT AVG(Winner_Pts), AVG(Loser_Pts) FROM superbowls; 
-SELECT MAX(Winner_Pts) FROM superbowls;
-SELECT MIN(Winner_Pts) FROM superbowls;
 
+--What is the highest score of any winning team in a superbowl?
+SELECT MAX(Winner_Pts) FROM superbowls;
+
+--Which NFL teams have won more than 3 superbowls?
 SELECT COUNT(Winner) AS total_wins, Winner FROM superbowls GROUP BY Winner
     HAVING total_wins >= 3
     ORDER by total_wins;
     
+--How many times has each player been awarded MVP?
 SELECT COUNT(MVP) AS number_mvp, MVP FROM superbowls GROUP BY MVP ORDER BY number_mvp;
 
+--How many times has Tom Brady won MVP while playing a superbowl in Houston?
 SELECT SB, MVP, City FROM superbowls WHERE MVP = "Tom Brady" AND City = "Houston"; 
 
+--This table shows whether the games were won within 1 touchdown or within 2 touchdowns.
 SELECT Winner, Loser, (Winner_Pts-Loser_Pts) AS Difference,
     CASE
     WHEN (Winner_Pts - Loser_Pts) <7 THEN "Within_1TD"
@@ -84,19 +92,9 @@ SELECT Winner, Loser, (Winner_Pts-Loser_Pts) AS Difference,
     ELSE "More_than_2TD"
     END AS Point_Difference
 FROM superbowls
-    WHERE Winner = "Pittsburgh Steelers"
     ORDER BY Difference; 
     
-    
-SELECT COUNT(*),
-    CASE
-    WHEN (Winner_Pts - Loser_Pts) <7 THEN "Within_1TD"
-    WHEN (Winner_Pts - Loser_Pts) <14 THEN "Within_2TD"
-    ELSE "More_than_2TD"
-    END AS Point_Difference
-FROM superbowls
-Group by Point_Difference; 
-
+--Which superbowls did the Denver Broncos win, and by how many points? 
 SELECT SB,Loser,(Winner_Pts - Loser_Pts) as Difference,
     CASE
     WHEN (Winner_Pts - Loser_Pts) <7 THEN "Within_1TD"
