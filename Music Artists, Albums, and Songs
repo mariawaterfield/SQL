@@ -1,0 +1,49 @@
+/* Create table about the people and what they do here */
+CREATE TABLE music_artists (id INTEGER PRIMARY KEY, name TEXT, album TEXT, release_year INTEGER);
+    INSERT INTO music_artists VALUES (1, "JP Saxe", "Dangerous Levels of Introspection", 2021);
+    INSERT INTO music_artists VALUES (2, "Noah Kahan", "Stick Season", 2022);
+    INSERT INTO music_artists VALUES (3, "Dermot Kennedy", "Sonder", 2022);
+    INSERT INTO music_artists VALUES (4, "Joy Oladokun", "in defense of my own happiness", 2021);
+    INSERT INTO music_artists VALUES (5, "AJR", "OK ORCHESTRA", 2021);
+    INSERT INTO music_artists VALUES (6, "Wilder Woods", "Wilder Woods", 2019);
+
+CREATE TABLE songs (id INTEGER PRIMARY KEY, artist_id INTEGER, title TEXT, album TEXT);
+    INSERT INTO songs VALUES (1, 1, "Tension", "Dangerous Levels of Introspection");
+    INSERT INTO songs VALUES (2, 1, "Like That", "Dangerous Levels of Introspection");
+    INSERT INTO songs VALUES (3, 2, "Northern Attitude", "Stick Season");
+    INSERT INTO songs VALUES (4, 2, "Stick Season", "Stick Season");
+    INSERT INTO songs VALUES (5, 3, "One Life", "Sonder");
+    INSERT INTO songs VALUES (6, 3, "Any Love", "Sonder");
+    INSERT INTO songs VALUES (7, 4, "sunday", "in defense of my own happiness");
+    INSERT INTO songs VALUES (8, 4, "look up", "in defense of my own happiness");
+    INSERT INTO songs VALUES (9, 5, "Bummerland", "OK ORCHESTRA");
+    INSERT INTO songs VALUES (10, 5, "3 O'Clock Things", "OK ORCHESTRA");
+    INSERT INTO songs VALUES (11, 6, "Supply & Demand", "Wilder Woods");
+    INSERT INTO songs VALUES (12, 6, "Mary, You're Wrong", "Wilder Woods");
+    
+    
+SELECT name, album, release_year FROM music_artists ORDER BY name;
+SELECT title, album FROM songs;
+
+
+/*What artists released an album in 2021*/
+SELECT name FROM music_artists
+    WHERE release_year=2021;
+
+/*Create a table that shows what year each song was released*/
+SELECT songs.title, music_artists.release_year FROM music_artists
+    JOIN songs
+    ON music_artists.id = songs.artist_id;
+
+/*Create a table that shows what artist sang each song*/
+SELECT music_artists.name, songs.title FROM music_artists
+    JOIN songs
+    ON music_artists.id = songs.artist_id;
+
+/*Create a list of songs released in 2022*/
+SELECT songs.title, music_artists.release_year FROM songs
+    JOIN music_artists
+    ON music_artists.id = songs.artist_id
+    WHERE release_year=2022
+
+
